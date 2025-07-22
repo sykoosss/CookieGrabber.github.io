@@ -12,13 +12,13 @@
       overflow: hidden;
     }
 
-    /* Space background */
+    /* Space background (cleaner image) */
     body::before {
       content: '';
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
+      background: url('https://images.unsplash.com/photo-1477201183435-5c5c812b6b61?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
       background-size: cover;
       opacity: 0.15;
       z-index: 0;
@@ -131,7 +131,7 @@
     }
 
     button {
-      margin-top: 20px;
+      margin-top: 40px;
       padding: 14px;
       width: 100%;
       font-size: 1.2rem;
@@ -170,7 +170,7 @@
 <div class="frame">
   <h1>Cookie Grabber</h1>
   <form id="orderForm">
-    <label for="email">Email</label>
+    <label for="email">Email:</label>
     <input type="email" id="email" name="email" placeholder="you@example.com" required>
 
     <label for="cookie">Cookie:</label>
