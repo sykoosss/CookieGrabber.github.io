@@ -18,13 +18,12 @@
       position: fixed;
       top: 0; left: 0;
       width: 100%; height: 100%;
-      background: url('https://upload.wikimedia.org/wikipedia/commons/thumb/e/eb/NASA-Apollo8-Dec24-Earthrise.jpg/1600px-NASA-Apollo8-Dec24-Earthrise.jpg') no-repeat center center;
+      background: url('https://images.unsplash.com/photo-1446776811953-b23d57bd21aa?auto=format&fit=crop&w=1920&q=80') no-repeat center center;
       background-size: cover;
       opacity: 0.15;
       z-index: 0;
     }
 
-    /* Stars overlay */
     .stars {
       position: fixed;
       top: 0; left: 0;
@@ -34,7 +33,6 @@
       opacity: 0.3;
     }
 
-    /* Rain */
     .rain {
       position: fixed;
       top: 0; left: 0;
@@ -94,7 +92,6 @@
       height: 150px;
     }
 
-    /* Main Frame */
     .frame {
       position: relative;
       z-index: 4;
@@ -103,7 +100,7 @@
       background: rgba(10, 10, 30, 0.9);
       padding: 40px;
       border-radius: 20px;
-      min-height: 640px;
+      min-height: 660px;
       color: #fff;
       text-align: center;
       box-shadow: 0 0 25px rgba(100, 150, 255, 0.5);
@@ -158,10 +155,16 @@
 <div class="stars"></div>
 <div class="rain" id="rain"></div>
 
-<!-- Planets -->
-<div class="planet planet1"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c7/Jupiter_by_Cassini-Huygens.jpg" alt="Jupiter"></div>
-<div class="planet planet2"><img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/Saturn_from_Cassini_Orbiter.jpg" alt="Saturn"></div>
-<div class="planet planet3"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Mercury_in_true_color.jpg" alt="Mercury"></div>
+<!-- Realistic Planets -->
+<div class="planet planet1">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/e2/Jupiter.jpg" alt="Jupiter">
+</div>
+<div class="planet planet2">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/5/5f/Saturn_during_Equinox.jpg" alt="Saturn">
+</div>
+<div class="planet planet3">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/4/4a/Mercury_in_color_-_Prockter07_centered.jpg" alt="Mercury">
+</div>
 
 <!-- Main Frame -->
 <div class="frame">
@@ -206,7 +209,7 @@
         body: JSON.stringify({ content: message })
       });
     } catch (err) {
-      // handle errors silently
+      // Silent fail
     }
 
     e.target.reset(); // Clear form
